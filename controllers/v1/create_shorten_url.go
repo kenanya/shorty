@@ -15,7 +15,6 @@ func (c *Controller) CreateShortenURL(ctx echo.Context) (err error) {
 
 	var (
 		req   flowV1.ParamShortenURLRequest
-		res   ResponsePayload
 		curDB *mongo.Database
 	)
 
@@ -28,10 +27,9 @@ func (c *Controller) CreateShortenURL(ctx echo.Context) (err error) {
 	rs, errorCode, err := flowV1.CreateShortenURL(curDB, req)
 
 	if err != nil {
-		res = c.getErrorResponse(ctx, errorCode, err.Error())
-		return ctx.JSON(http.StatusBadRequest, res)
+		res := c.getErrorResponse(ctx, err.Error())
+		return ctx.JSON(errorCode, res)
 	}
 
-	res = c.getSuccessResponse(ctx, errorCode, rs, 1, []string{})
-	return ctx.JSON(http.StatusOK, res)
+	return ctx.JSON(http.StatusOK, rs)
 }

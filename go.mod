@@ -11,6 +11,7 @@ require (
 	github.com/labstack/echo-contrib v0.9.0
 	github.com/labstack/echo/v4 v4.2.2
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb
 	github.com/sirupsen/logrus v1.4.2
 	github.com/tylerb/graceful v1.2.15
 	github.com/wolvex/sf-apigw v0.0.0-20200706223050-a14c38057415

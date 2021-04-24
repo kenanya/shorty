@@ -7,9 +7,6 @@ import (
 	"os"
 	"time"
 
-	// "github.com/kenanya/jt-analytic-tools-api/pkg/cmd"
-
-	// "github.com/kenanya/shorty/cmd"
 	cm "github.com/kenanya/shorty/common"
 	"github.com/kenanya/shorty/pkg/logger"
 	"github.com/kenanya/shorty/router"
@@ -52,7 +49,6 @@ func ConnectToDB() (*mongo.Database, error) {
 	)
 
 	if err != nil {
-		// log.Fatalf("failed to create new MongoDB client: %#v", err)
 		logger.Log.Fatal("failed to create new MongoDB client", zap.String("reason", err.Error()))
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -60,10 +56,8 @@ func ConnectToDB() (*mongo.Database, error) {
 
 	// connect client
 	if err = client.Connect(ctx); err != nil {
-		// log.Fatalf("failed to connect to MongoDB: %#v", err)
 		logger.Log.Fatal("failed to connect to MongoDB", zap.String("reason", err.Error()))
 	}
-	// log.Printf("connected successfully")
 	logger.Log.Info("connected successfully")
 
 	db := client.Database(cm.ConfEnv.DatastoreDBSchema)
@@ -95,34 +89,8 @@ func main() {
 		logger.Log.Fatal("failed initialize MongoDB connection", zap.String("reason", err.Error()))
 	}
 
-	//start the server
 	e.Server.Addr = cm.ConfEnv.RestPort
 
 	//assign routing
 	router.AssignRouting(e, db)
-
-	// // 	e := echo.New()
-	// e.GET("/", func(c echo.Context) error {
-	// 	return c.String(http.StatusOK, "Hello, TGFWM!")
-	// })
-	// e.Logger.Fatal(e.Start(":1323"))
-
-	// //assign metrics
-	// p := prometheus.NewPrometheus("shorten_url", nil)
-	// p.Use(e)
-
-	// //start the server
-	// e.Server.Addr = cm.ConfEnv.RestPort
-	// graceful.ListenAndServe(e.Server, 5*time.Second)
-
-	// if cm.Config.CertificateFile == "" || cm.Config.KeyFile == "" {
-	// 	graceful.ListenAndServe(e.Server, 5*time.Second)
-	// } else {
-	// 	if err := graceful.ListenAndServeTLS(e.Server, cm.Config.CertificateFile, cm.Config.KeyFile, 5*time.Second); err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// }
-
-	fmt.Println("## sampe bawah")
-
 }

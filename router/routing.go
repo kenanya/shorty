@@ -43,9 +43,10 @@ func AssignRouting(e *echo.Echo, db *mongo.Database) *echo.Echo {
 	})
 
 	g.POST("/shorten", api.CreateShortenURL)
+	g.GET("/:shortcode", api.GetURLByShortCode)
+	g.GET("/:shortcode/stats", api.GetURLStatByShortCode)
+
 	fmt.Printf("## TGFWM, port : <%+v>\n\n", e.Server.Addr)
-	// // e.GET("/:shortcode", api.GetURLByShortCode)
-	// // e.GET("/:shortcode/stats", api.GetURLStatByShortCode)
 
 	// Start server
 	go func() {
