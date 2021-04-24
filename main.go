@@ -85,7 +85,6 @@ func main() {
 	//initilize storage connections
 	db, err := ConnectToDB()
 	if err != nil {
-		// log.Fatalf("failed initialize MongoDB connection: %#v", err)
 		logger.Log.Fatal("failed initialize MongoDB connection", zap.String("reason", err.Error()))
 	}
 

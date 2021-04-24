@@ -22,7 +22,7 @@ func (c *Controller) GetURLByShortCode(ctx echo.Context) (err error) {
 	curDB = c.CurDB
 	shortcode = ctx.Param("shortcode")
 
-	logger.Log.Info("## Controller GetURLStatByShortCode shortcode : ", zap.String("reason", shortcode))
+	logger.Log.Info("## Controller GetURLByShortCode shortcode : ", zap.String("reason", shortcode))
 	rs, errorCode, err := flowV1.GetURLByShortCode(curDB, shortcode)
 
 	if err != nil {

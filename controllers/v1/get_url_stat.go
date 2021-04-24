@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/kenanya/shorty/lib/flowV1"
@@ -17,6 +18,7 @@ func (c *Controller) GetURLStatByShortCode(ctx echo.Context) (err error) {
 		shortcode string
 		curDB     *mongo.Database
 	)
+	fmt.Println("masuk nih GetURLStatByShortCode")
 
 	curDB = c.CurDB
 	shortcode = ctx.Param("shortcode")
