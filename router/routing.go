@@ -1,10 +1,6 @@
 package router
 
 import (
-
-	// mw "github.com/kenanya/shorty/middlewares"
-	// "registry/models"
-
 	"context"
 	"fmt"
 	"net/http"
@@ -15,17 +11,9 @@ import (
 	v1 "github.com/kenanya/shorty/controllers/v1"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
-	// "github.com/sirupsen/logrus"
 )
 
 func AssignRouting(e *echo.Echo, db *mongo.Database) *echo.Echo {
-
-	// 	e := echo.New()
-	// e.GET("/tes12", func(c echo.Context) error {
-	// 	return c.String(http.StatusOK, "Hello, TGFWM!")
-	// })
-	// e.Logger.Fatal(e.Start(":1323"))
-	// e.Logger.Fatal(e.Start(":" + e.Server.Addr))
 
 	//api v1 handlers
 	api := v1.Controller{
