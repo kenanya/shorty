@@ -5,10 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"regexp"
 	"time"
-
-	// "github.com/astaxie/beego/validation"
 
 	"github.com/kenanya/shorty/lib/helper"
 	"github.com/kenanya/shorty/pkg/logger"
@@ -60,6 +59,12 @@ func CreateShortenURL(CurDB *mongo.Database, req ParamShortenURLRequest) (rs Res
 	if req.Url == "" {
 		logger.Log.Error("url is not present")
 		return rs, http.StatusBadRequest, errors.New("url is not present")
+	} else {
+		_, errUrl := url.ParseRequestURI(req.Url)
+		if errUrl != nil {
+			logger.Log.Error("## CreateShortenURL Error invalid URL", zap.String("reason", errUrl.Error()))
+			return rs, http.StatusBadRequest, errors.New("Invalid URL")
+		}
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -89,6 +94,7 @@ func CreateShortenURL(CurDB *mongo.Database, req ParamShortenURLRequest) (rs Res
 	}
 
 	in := URLModel{
+		ID:            primitive.NewObjectID(),
 		URL:           req.Url,
 		ShortCode:     tempShort,
 		StartDate:     ts,
@@ -96,12 +102,12 @@ func CreateShortenURL(CurDB *mongo.Database, req ParamShortenURLRequest) (rs Res
 		RedirectCount: 0,
 	}
 
+	fmt.Printf("## CreateShortenURL in : <%+v>", in)
 	res, err := coll.InsertOne(ctx, &in)
 	if err != nil {
 		logger.Log.Error("insert data into collection <"+collName+">", zap.String("reason", err.Error()))
 		return rs, 0, errors.New("error insert data into collection")
 	}
-	// logger.Log.Info("res.InsertedID : " + res.InsertedID.(primitive.ObjectID))
 	fmt.Printf("## res.InsertedID : <%+v> \n", res.InsertedID)
 
 	rs.ShortCode = in.ShortCode
@@ -122,7 +128,6 @@ func GetURLByShortCode(CurDB *mongo.Database, shortcode string) (rs ResponseGetU
 		logger.Log.Error("shortcode is not present")
 		return rs, http.StatusBadRequest, errors.New("shortcode is not present")
 	} else {
-		// resultCriterion = append(resultCriterion, bson.D{{"shortcode", shortcode}})
 		filter = bson.D{
 			{Key: "shortcode", Value: shortcode},
 		}
@@ -132,7 +137,6 @@ func GetURLByShortCode(CurDB *mongo.Database, shortcode string) (rs ResponseGetU
 	// // Read data from collection
 	err = coll.FindOne(ctx, filter).Decode(&out)
 	if err != nil {
-		// logger.Log.Info("filter data =%v", zap.String("reason", filter.(string)))
 		if err.Error() == "mongo: no documents in result" {
 			logger.Log.Info("No data found")
 			return rs, http.StatusNotFound, errors.New(desc404)
@@ -144,15 +148,11 @@ func GetURLByShortCode(CurDB *mongo.Database, shortcode string) (rs ResponseGetU
 	fmt.Printf("%#v\n\n\n", out)
 
 	if out != nil {
-		// up.RedirectCount = out.RedirectCount + 1
 		up = &URLModel{
 			RedirectCount: out.RedirectCount + 1,
 			LastSeenDate:  ts,
 			ID:            out.ID,
 		}
-		// up.RedirectCount = 100
-		// up.LastSeenDate = ts
-		// up.ID = out.ID
 		err = updateURLData(ctx, CurDB, up)
 		if err != nil {
 			logger.Log.Error("Fail to update RedirectCount and LastSeenDate", zap.String("reason", err.Error()))
@@ -178,7 +178,6 @@ func GetURLStatByShortCode(CurDB *mongo.Database, shortcode string) (rs Response
 		logger.Log.Error("shortcode is not present")
 		return rs, http.StatusBadRequest, errors.New("shortcode is not present")
 	} else {
-		// resultCriterion = append(resultCriterion, bson.D{{"shortcode", shortcode}})
 		filter = bson.D{
 			{Key: "shortcode", Value: shortcode},
 		}
@@ -188,7 +187,6 @@ func GetURLStatByShortCode(CurDB *mongo.Database, shortcode string) (rs Response
 	// // Read data from collection
 	err = coll.FindOne(ctx, filter).Decode(&out)
 	if err != nil {
-		// logger.Log.Info("filter data =%v", zap.String("reason", filter.(string)))
 		if err.Error() == "mongo: no documents in result" {
 			logger.Log.Info("No data found")
 			return rs, http.StatusNotFound, errors.New(desc404)
