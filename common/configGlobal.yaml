@@ -1,0 +1,33 @@
+
+local_conf:
+  db_host_test: localhost:32768
+  # db_host: datastore:27017 #utk doker
+  db_host: localhost:27017 #tanpa doker
+  db_user: ken
+  db_password: ken123
+  db_schema: shorty
+  db_schema_test: shorty_test
+  rest_port: 9701
+  
+staging_conf:
+  # change to your staging config
+  db_host_test: localhost:32768
+  db_host: 10.1.1.1:27017
+  db_user: ds_cool_dev
+  db_password: db_staging_password
+  db_schema: shorty
+  db_schema_test: shorty_test
+  rest_port: 9701
+
+production_conf: 
+  # change to your production config
+  db_host_test: localhost:32768
+  db_host: 10.1.1.1:27017
+  db_user: jt_db
+  db_password: db_prod_password
+  db_schema: shorty
+  db_schema_test: shorty_test
+  rest_port: 9701
+
+
+  

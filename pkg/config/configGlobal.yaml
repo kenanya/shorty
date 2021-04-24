@@ -1,0 +1,34 @@
+
+local_conf:
+  db_host_test: localhost:32768
+  db_host: datastore:27017
+  # db_host: localhost:27017
+  db_user: ken
+  db_password: ken123
+  db_schema: jt_db
+  db_schema_test: jt_db_test
+  grpc_port: 9606
+  # grpc_port: 9998
+  
+staging_conf:
+  # change to your staging config
+  db_host_test: localhost:32768
+  db_host: 10.1.1.1:27017
+  db_user: ds_cool_dev
+  db_password: db_staging_password
+  db_schema: jt_db
+  db_schema_test: jt_db_test
+  grpc_port: 9606
+
+production_conf: 
+  # change to your production config
+  db_host_test: localhost:32768
+  db_host: 10.1.1.1:27017
+  db_user: jt_db
+  db_password: db_prod_password
+  db_schema: jt_db
+  db_schema_test: jt_db_test
+  grpc_port: 9606
+
+
+  
