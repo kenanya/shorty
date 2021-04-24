@@ -1,0 +1,32 @@
+# docker-compose.yml
+version: '3.5'
+
+services:
+
+  # Services
+  url_shortener:
+    restart: always
+    build: 
+      context: .
+      dockerfile: build/Dockerfile.shortener
+    depends_on:
+      - datastore
+    ports:
+      - 9701:9701
+    environment:
+      APP_ENV: "local"
+      DB_HOST: "mongodb://datastore:27017"
+      TZ: "Asia/Jakarta"
+
+  # Database tier
+  datastore:
+    image: mongo
+    container_name: "datastore"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db # ensures data persistence between restarting
+    ports:
+      - 27017
+    command: mongod --logpath=/dev/null

@@ -31,5 +31,5 @@ func (c *Controller) CreateShortenURL(ctx echo.Context) (err error) {
 		return ctx.JSON(errorCode, res)
 	}
 
-	return ctx.JSON(http.StatusOK, rs)
+	return ctx.JSON(http.StatusCreated, rs)
 }

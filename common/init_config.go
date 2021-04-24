@@ -66,8 +66,11 @@ func InitConfig() {
 	}
 
 	// filepath := path.Join(path.Dir(dir), "../pkg/config/configGlobal.yaml")
-	filepath := path.Join(path.Dir(dir), "shorty/common/configGlobal.yaml")
+	// filepath := path.Join(path.Dir(dir), "shorty/common/configGlobal.yaml")
+	filepath := path.Join(path.Dir(dir), "common/configGlobal.yaml")
 	yamlFile, err := ioutil.ReadFile(filepath)
+
+	fmt.Println("## InitConfig : " + filepath + " ~ ")
 
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)

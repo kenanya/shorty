@@ -1,8 +1,8 @@
 
 local_conf:
   db_host_test: localhost:32768
-  # db_host: datastore:27017 #utk doker
-  db_host: localhost:27017 #tanpa doker
+  db_host: datastore:27017 #utk doker
+  # db_host: localhost:27017 #tanpa doker
   db_user: ken
   db_password: ken123
   db_schema: shorty

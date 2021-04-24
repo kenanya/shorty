@@ -31,15 +31,15 @@ func ConnectToDB() (*mongo.Database, error) {
 	// log.Printf("connecting to MongoDB...")
 	logger.Log.Info("connecting to MongoDB...")
 
-	uri := fmt.Sprintf(`mongodb://%s:%s@%s/%s`,
-		cm.ConfEnv.DatastoreDBUser,
-		cm.ConfEnv.DatastoreDBPassword,
-		cm.ConfEnv.DatastoreDBHost,
-		cm.ConfEnv.DatastoreDBSchema,
-	)
-	// uri := fmt.Sprintf(`mongodb://%s`,
+	// uri := fmt.Sprintf(`mongodb://%s:%s@%s/%s`,
+	// 	cm.ConfEnv.DatastoreDBUser,
+	// 	cm.ConfEnv.DatastoreDBPassword,
 	// 	cm.ConfEnv.DatastoreDBHost,
+	// 	cm.ConfEnv.DatastoreDBSchema,
 	// )
+	uri := fmt.Sprintf(`mongodb://%s`,
+		cm.ConfEnv.DatastoreDBHost,
+	)
 
 	client, err := mongo.NewClient(
 		options.Client().ApplyURI(uri),
