@@ -147,7 +147,8 @@ curl --location --request GET 'localhost:9701/v1/14/stats' \
 
 #### Negative Scenario 1 - Response
 ```json
-404
+404 Not Found
+
 Content-Type: "application/json"
 
 {
@@ -174,12 +175,6 @@ APP_ENV=local go test ./controllers/v1 -tags=unit_get_url -v
 APP_ENV=local go test ./controllers/v1 -tags=unit_get_url_stat -v
 ```
 
-For the unit test purpose, I use mongo DB at host localhost and port 32768. 32768 is the external port that used by mongo DB from docker compose. You can check the port which is used by mongo container using `docker ps` command. If the port is not 32768, you can change `db_host_test` variable at config file.
-```bash
-❯ docker ps
-CONTAINER ID    IMAGE   COMMAND                 PORTS       
-8880d4b440d3    mongo   "docker-entrypoint.s…"  0.0.0.0:32768->27017/tcp
-```
 
 
 
