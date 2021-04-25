@@ -7,19 +7,22 @@ This project contains of 1 microservice that aim to shorten urls. This microserv
 The data will be stored to MongoDB. Tech Stack: Golang, echo, MongoDB, docker
 
 ## B. How to Start
-Please extract the zip directory and enter to it. 
-```bash
-unzip test_amartha.zip
-cd test_amartha/shorty
-```
+Please clone this repository and then enter to the project directory. 
 
 ## C. Configuration
 The config file is located at:
-- test_amartha/shorty/common/configGlobal.yaml
+- shorty/common/configGlobal.yaml
 
 You can change the values according to your configuration. 
 
 ## D. Build and Run Project
+### Check Config File
+To run this service using docker, please select datastore:27017 as db_host, or according to your local setting in config file that is written at the point C.
+
+local_conf:
+  db_host_test: localhost:32768
+  db_host: datastore:27017 # docker use
+  # db_host: localhost:27017 # without using docker
 #### Build Project
 ```bash
 docker-compose -f docker-compose-local.yml build
@@ -150,13 +153,20 @@ Content-Type: "application/json"
 ```
 
 
-
 ## F. Unit Test
+Firstly we have to create database that is defined in shorty/common/configGlobal.yaml 
+
+To run the test without using docker, please select localhost:27017 as db_host, or according to your local setting.
+local_conf:
+  db_host_test: localhost:32768
+  # db_host: datastore:27017 # docker use
+  db_host: localhost:27017 # without using docker
+
 These are the steps to run unit test for each microservice:
 ```bash
-APP_ENV=local go test ./pkg/service/v1/ -tags=unit_video_bank_service -v
-APP_ENV=local go test ./pkg/service/v1/ -tags=unit_user_service -v
-APP_ENV=local go test ./pkg/service/v1/ -tags=unit_analytic_telemetry_service -v
+APP_ENV=local go test ./controllers/v1 -tags=unit_create_shorten_url -v
+APP_ENV=local go test ./controllers/v1 -tags=unit_get_url -v
+APP_ENV=local go test ./controllers/v1 -tags=unit_get_url_stat -v
 ```
 
 For the unit test purpose, I use mongo DB at host localhost and port 32768. 32768 is the external port that used by mongo DB from docker compose. You can check the port which is used by mongo container using `docker ps` command. If the port is not 32768, you can change `db_host_test` variable at config file.
