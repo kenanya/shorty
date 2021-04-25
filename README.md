@@ -18,11 +18,13 @@ You can change the values according to your configuration.
 ## D. Build and Run Project
 ### Check Config File
 To run this service using docker, please select datastore:27017 as db_host, or according to your local setting in config file that is written at the point C.
-
+```json
 local_conf:
   db_host_test: localhost:32768
   db_host: datastore:27017 # docker use
-  # db_host: localhost:27017 # without using docker
+  db_host: localhost:27017 # without using docker
+```
+
 #### Build Project
 ```bash
 docker-compose -f docker-compose-local.yml build
@@ -105,7 +107,8 @@ curl --location --request GET 'localhost:9701/v1/111111' \
 
 #### Negative Scenario 1 - Response
 ```json
-404
+404 Not Found
+
 Content-Type: "application/json"
 
 {
@@ -157,10 +160,12 @@ Content-Type: "application/json"
 Firstly we have to create database that is defined in shorty/common/configGlobal.yaml 
 
 To run the test without using docker, please select localhost:27017 as db_host, or according to your local setting.
+```json
 local_conf:
   db_host_test: localhost:32768
-  # db_host: datastore:27017 # docker use
+  db_host: datastore:27017 # docker use
   db_host: localhost:27017 # without using docker
+```
 
 These are the steps to run unit test for each microservice:
 ```bash
