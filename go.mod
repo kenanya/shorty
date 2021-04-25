@@ -13,6 +13,7 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb
 	github.com/sirupsen/logrus v1.4.2
+	github.com/stretchr/testify v1.6.1
 	github.com/tylerb/graceful v1.2.15
 	github.com/wolvex/sf-apigw v0.0.0-20200706223050-a14c38057415
 	github.com/yuin/gopher-lua v0.0.0-20200816102855-ee81675732da // indirect

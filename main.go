@@ -78,7 +78,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	cm.InitConfig()
+	cm.InitConfig("")
 
 	e := echo.New()
 

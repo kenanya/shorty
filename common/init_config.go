@@ -58,16 +58,19 @@ type GlobalConfig struct {
 	}
 }
 
-func InitConfig() {
+func InitConfig(mode string) {
 
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// filepath := path.Join(path.Dir(dir), "../pkg/config/configGlobal.yaml")
 	// filepath := path.Join(path.Dir(dir), "shorty/common/configGlobal.yaml")
 	filepath := path.Join(path.Dir(dir), "common/configGlobal.yaml")
+	if mode == "unit_test" {
+		filepath = path.Join(path.Dir(dir), "../common/configGlobal.yaml")
+	}
+
 	yamlFile, err := ioutil.ReadFile(filepath)
 
 	fmt.Println("## InitConfig : " + filepath + " ~ ")
